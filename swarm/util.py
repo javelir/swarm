@@ -11,6 +11,9 @@ def debug_print(debug: bool, *args: str) -> None:
 
 
 def merge_fields(target, source):
+    """
+    Merge key value(str) from source to target dict
+    """
     for key, value in source.items():
         if isinstance(value, str):
             target[key] += value
@@ -19,6 +22,9 @@ def merge_fields(target, source):
 
 
 def merge_chunk(final_response: dict, delta: dict) -> None:
+    """
+    Merge key value(str) and tool calls from delta to response
+    """
     delta.pop("role", None)
     merge_fields(final_response, delta)
 

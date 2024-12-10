@@ -12,6 +12,9 @@ AgentFunction = Callable[[], Union[str, "Agent", dict]]
 
 
 class Agent(BaseModel):
+    """
+    Define a Agent: including instruction and tools
+    """
     name: str = "Agent"
     model: str = "gpt-4o"
     instructions: Union[str, Callable[[], str]] = "You are a helpful agent."
@@ -21,6 +24,11 @@ class Agent(BaseModel):
 
 
 class Response(BaseModel):
+    """
+    Define output responses
+    NOTE:
+        1. no further data model for message
+    """
     messages: List = []
     agent: Optional[Agent] = None
     context_variables: dict = {}

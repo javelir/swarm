@@ -4,6 +4,9 @@ from swarm import Swarm
 
 
 def process_and_print_streaming_response(response):
+    """
+    Print response sender content/tool_call/delim/response
+    """
     content = ""
     last_sender = ""
 
@@ -60,6 +63,9 @@ def pretty_print_messages(messages) -> None:
 def run_demo_loop(
     starting_agent, context_variables=None, stream=False, debug=False
 ) -> None:
+    """
+    Run agent with user input each loop (multistep internally)
+    """
     client = Swarm()
     print("Starting Swarm CLI 🐝")
 

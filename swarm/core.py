@@ -38,6 +38,23 @@ class Swarm:
         stream: bool,
         debug: bool,
     ) -> ChatCompletionMessage:
+        """
+        Build OpenAI request
+	        context_variables
+			        -> (instructions) system message -> messages
+			        -> tools (exclude context_variables)
+	        history
+			        -> messages
+	        model_override
+			        -> model
+	        stream
+			        -> stream
+			    agent
+					    -> .model -> model
+					    -> .functions -> tools
+					    -> .instructions -> system message
+					    -> .tool_choice -> tool_choice
+        """
         context_variables = defaultdict(str, context_variables)
         instructions = (
             agent.instructions(context_variables)
@@ -69,6 +86,12 @@ class Swarm:
         return self.client.chat.completions.create(**create_params)
 
     def handle_function_result(self, result, debug) -> Result:
+        """
+        Handle result of functions/tools
+            - Result: expected, return
+            - Agent: expected, convert to Result and return
+            - Other: unexpected, convert to Result of which value is the string version of original result. return Result
+        """
         match result:
             case Result() as result:
                 return result
@@ -93,6 +116,17 @@ class Swarm:
         context_variables: dict,
         debug: bool,
     ) -> Response:
+        """
+        Handle tool_calls in agent result
+            1. 不存在于agent定义的tool: 构造ERROR消息
+            2. 存在于agent定义的tool: func(**arguments, context_variables?={})
+            3. 更新Response的:
+                - content是工具消息
+                - agent是可能的下一个agent
+                - context_variables来自于工具执行的结果
+        NOTE:
+            tool对context_variables的使用和输出参数名都是context_variables
+        """
         function_map = {f.__name__: f for f in functions}
         partial_response = Response(
             messages=[], agent=None, context_variables={})
@@ -146,6 +180,11 @@ class Swarm:
         max_turns: int = float("inf"),
         execute_tools: bool = True,
     ):
+        """
+        Yield all results of every turn
+        - Use `{"delim": "start/end"}` to wrap streams of each turn
+        - Create message dict object for stream merging
+        """
         active_agent = agent
         context_variables = copy.deepcopy(context_variables)
         history = copy.deepcopy(messages)
@@ -239,6 +278,13 @@ class Swarm:
         max_turns: int = float("inf"),
         execute_tools: bool = True,
     ) -> Response:
+        """
+        Run Agent steps/turns, loop until empty tool_calls and no Agent switch
+            1. LLM(history, context_variables, agent)
+            2. tool calling
+            3. Memory updation: history, context_variables
+            4. agent triage
+        """
         if stream:
             return self.run_and_stream(
                 agent=agent,
