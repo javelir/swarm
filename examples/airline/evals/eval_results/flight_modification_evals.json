@@ -241,5 +241,86 @@
         "correct_evals": 15,
         "total_evals": 15,
         "overall_accuracy_percent": "100.00%"
+    },
+    {
+        "id": "efdc577b-9c6f-4e58-8039-9f4e189e8a90",
+        "timestamp": "2024-12-11T13:41:58.323302",
+        "results": [
+            {
+                "messages": [
+                    {
+                        "role": "user",
+                        "content": "I want to change my flight to one day earlier!"
+                    }
+                ],
+                "expected_function": "transfer_to_flight_change",
+                "actual_function": [
+                    "transfer_to_flight_change",
+                    "transfer_to_flight_change",
+                    "transfer_to_flight_change",
+                    "transfer_to_flight_change",
+                    "transfer_to_flight_change"
+                ],
+                "actual_message": [
+                    "None",
+                    "None",
+                    "None",
+                    "None",
+                    "None"
+                ],
+                "case_accuracy": "100.00%"
+            },
+            {
+                "messages": [
+                    {
+                        "role": "user",
+                        "content": "I want to cancel my flight. I can't make it anymore due to a personal conflict"
+                    }
+                ],
+                "expected_function": "transfer_to_flight_cancel",
+                "actual_function": [
+                    "None",
+                    "transfer_to_flight_cancel",
+                    "transfer_to_flight_cancel",
+                    "transfer_to_flight_cancel",
+                    "transfer_to_flight_cancel"
+                ],
+                "actual_message": [
+                    "{\"name\":\"transfer_to_flight_cancel\",\"parameters\\\":{\\\"originalMessageText\":\"I want to cancel my flight. I can\\\\u2019t make it anymore due to a personal conflict\"}}",
+                    "None",
+                    "None",
+                    "None",
+                    "None"
+                ],
+                "case_accuracy": "80.00%"
+            },
+            {
+                "messages": [
+                    {
+                        "role": "user",
+                        "content": "I dont want this flight"
+                    }
+                ],
+                "expected_function": "None",
+                "actual_function": [
+                    "transfer_to_flight_cancel",
+                    "transfer_to_flight_cancel",
+                    "None",
+                    "None",
+                    "None"
+                ],
+                "actual_message": [
+                    "None",
+                    "None",
+                    "{\"type\":\"function\",\"function\":\"transfer_to_flight_cancel\",\"parameters}{}}",
+                    "{\"name\":\"transfer_to_flight_cancel\",\"parameters\":{\"}}",
+                    "{\"name\":\"transfer_to_flight_cancel\",\"parameters}{}}"
+                ],
+                "case_accuracy": "60.00%"
+            }
+        ],
+        "correct_evals": 12,
+        "total_evals": 15,
+        "overall_accuracy_percent": "80.00%"
     }
 ]

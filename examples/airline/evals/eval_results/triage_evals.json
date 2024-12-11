@@ -418,5 +418,110 @@
         "correct_evals": 20,
         "total_evals": 20,
         "overall_accuracy_percent": "100.00%"
+    },
+    {
+        "id": "80b783cd-8418-44d6-91a3-769d310c94ab",
+        "timestamp": "2024-12-11T13:41:55.703696",
+        "results": [
+            {
+                "messages": [
+                    {
+                        "role": "user",
+                        "content": "My bag was not delivered!"
+                    }
+                ],
+                "expected_function": "transfer_to_lost_baggage",
+                "actual_function": [
+                    "transfer_to_lost_baggage",
+                    "transfer_to_lost_baggage",
+                    "transfer_to_lost_baggage",
+                    "transfer_to_flight_modification",
+                    "transfer_to_lost_baggage"
+                ],
+                "actual_message": [
+                    "None",
+                    "None",
+                    "None",
+                    "None",
+                    "None"
+                ],
+                "case_accuracy": "80.00%"
+            },
+            {
+                "messages": [
+                    {
+                        "role": "user",
+                        "content": "I had some turbulence on my flight"
+                    }
+                ],
+                "expected_function": "None",
+                "actual_function": [
+                    "transfer_to_flight_modification",
+                    "None",
+                    "transfer_to_flight_modification",
+                    "transfer_to_flight_modification",
+                    "transfer_to_flight_modification"
+                ],
+                "actual_message": [
+                    "None",
+                    "{\"name\":\"transfer_to_flight_moderation\",\"parameters(){}}",
+                    "None",
+                    "None",
+                    "None"
+                ],
+                "case_accuracy": "20.00%"
+            },
+            {
+                "messages": [
+                    {
+                        "role": "user",
+                        "content": "I want to cancel my flight please"
+                    }
+                ],
+                "expected_function": "transfer_to_flight_modification",
+                "actual_function": [
+                    "None",
+                    "transfer_to_flight_modification",
+                    "transfer_to_flight_modification",
+                    "transfer_to_flight_modification",
+                    "transfer_to_flight_modification"
+                ],
+                "actual_message": [
+                    "{\"name\":\"transfer_to_flight_modification\",\"parameters\":{}\"}",
+                    "None",
+                    "None",
+                    "None",
+                    "None"
+                ],
+                "case_accuracy": "80.00%"
+            },
+            {
+                "messages": [
+                    {
+                        "role": "user",
+                        "content": "What is the meaning of life"
+                    }
+                ],
+                "expected_function": "None",
+                "actual_function": [
+                    "None",
+                    "transfer_to_flight_modification",
+                    "transfer_to_lost_baggage",
+                    "transfer_to_lost_baggage",
+                    "None"
+                ],
+                "actual_message": [
+                    "{\"name\": \"transfer_to_lost_baggage\", \"parameters\": {\"}\"}",
+                    "None",
+                    "None",
+                    "None",
+                    "{\"name\": \"transfer_to_lost_baggage\", \"parameters\": {\"\"}}"
+                ],
+                "case_accuracy": "40.00%"
+            }
+        ],
+        "correct_evals": 11,
+        "total_evals": 20,
+        "overall_accuracy_percent": "55.00%"
     }
 ]
