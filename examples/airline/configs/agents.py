@@ -6,23 +6,23 @@ from data.routines.prompts import STARTER_PROMPT
 from swarm import Agent
 
 
-def transfer_to_flight_modification():
+def transfer_to_flight_modification(**kwargs):
     return flight_modification
 
 
-def transfer_to_flight_cancel():
+def transfer_to_flight_cancel(**kwargs):
     return flight_cancel
 
 
-def transfer_to_flight_change():
+def transfer_to_flight_change(**kwargs):
     return flight_change
 
 
-def transfer_to_lost_baggage():
+def transfer_to_lost_baggage(**kwargs):
     return lost_baggage
 
 
-def transfer_to_triage():
+def transfer_to_triage(**kwargs):
     """Call this function when a user needs to be transferred to a different agent and a different policy.
     For instance, if a user is asking about a topic that is not handled by the current agent, call this function.
     """
