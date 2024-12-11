@@ -5,7 +5,7 @@ from openai.types.chat.chat_completion import ChatCompletion, Choice
 import json
 
 
-def create_mock_response(message, function_calls=[], model="gpt-4o"):
+def create_mock_response(message, function_calls=[], model="llama3.2"):
     role = message.get("role", "assistant")
     content = message.get("content", "")
     tool_calls = (

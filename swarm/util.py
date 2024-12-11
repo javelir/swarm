@@ -59,6 +59,7 @@ def function_to_json(func) -> dict:
 
     parameters = {}
     for param in signature.parameters.values():
+        if param.kind in (param.VAR_POSITIONAL, param.VAR_KEYWORD): continue
         try:
             param_type = type_map.get(param.annotation, "string")
         except KeyError as e:
@@ -70,7 +71,10 @@ def function_to_json(func) -> dict:
     required = [
         param.name
         for param in signature.parameters.values()
-        if param.default == inspect._empty
+        if param.default == inspect._empty and param.kind not in (
+            param.VAR_POSITIONAL,
+            param.VAR_KEYWORD,
+        )
     ]
 
     return {
